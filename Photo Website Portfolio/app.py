@@ -52,7 +52,8 @@ def Login():
 @app.route('/photos/scenery')
 def GetScenery():
     try:
-        return render_template("scenery.html"), 200     # OK
+        
+        return render_template("scenery.html", images = []), 200     # OK
     except Exception as err:
         print(err)
         return {}, 500      # internal server error
