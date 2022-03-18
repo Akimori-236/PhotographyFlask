@@ -2,6 +2,7 @@ from select import select
 from flask import Flask, request, jsonify, g, render_template
 from flask_cors import CORS
 from model.User import User
+from model.Photo import Photo
 from Validation.Validator import *
 
 app = Flask(__name__)
@@ -48,12 +49,13 @@ def Login():
         print(err)
         return {}, 500      # internal server error
 
-# get scenery page
-@app.route('/photos/scenery')
-def GetScenery():
+# get photos according to genre
+@app.route('/photos/<string:genre>')
+def getPhotosFromGenre(genre):
     try:
-        
-        return render_template("scenery.html", images = []), 200     # OK
+        jsonPhotos = Photo.getPhotosFromGenre(genre)
+        output = {"Photos": jsonPhotos}
+        return render_template("photoGallery.html", images = output), 200     # OK
     except Exception as err:
         print(err)
         return {}, 500      # internal server error
