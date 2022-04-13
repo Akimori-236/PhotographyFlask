@@ -1,17 +1,19 @@
+from ast import Str
 from select import select
 from flask import Flask, request, jsonify, g, render_template
 from flask_cors import CORS
+from matplotlib.pyplot import title
 from model.User import User
 from model.Photo import Photo
 from Validation.Validator import *
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 CORS(app)
 
 @app.route('/')
 @app.route("/index")
 def sanityCheck():
-    return render_template("index.html")
+    return render_template("index.html", title="Akimori Photo")
 
 # ERRORS
 @app.errorhandler(500)
@@ -44,7 +46,7 @@ def getAllUsers():
 @app.route('/login')
 def Login():
     try:
-        return render_template("login.html"), 200     # OK
+        return render_template("login.html", title="Akimori Photo | Log In"), 200     # OK
     except Exception as err:
         print(err)
         return {}, 500      # internal server error
@@ -55,7 +57,7 @@ def getPhotosFromGenre(genre):
     try:
         jsonPhotos = Photo.getPhotosFromGenre(genre)
         output = {"Photos": jsonPhotos}
-        return render_template("photoGallery.html", images = output), 200     # OK
+        return render_template("photoGallery.html", title = "Akimori Photo"+str(genre) , images = output), 200     # OK
     except Exception as err:
         print(err)
         return {}, 500      # internal server error
