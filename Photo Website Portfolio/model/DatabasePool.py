@@ -4,12 +4,12 @@ from config.settings import Settings
 class DatabasePool:
     # class variable
     connection_pool = pooling.MySQLConnectionPool(
-        pool_name='ws_pool',
-        pool_size=5,
-        host='localhost',
-        database=Settings.database,
-        user=Settings.user,
-        password=Settings.password
+        pool_name = 'ws_pool',
+        pool_size = 5,
+        host = 'localhost',
+        database = Settings.database,
+        user = Settings.user,
+        password = Settings.password
     )
     
     @classmethod
